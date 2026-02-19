@@ -1,5 +1,7 @@
 using FacilitiesCoordinator.API.Endpoints;
 using System.Reflection;
+using FacilitiesCoordinator.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +17,15 @@ builder.Services.AddSwaggerGen(c =>
     c.IncludeXmlComments(xmlPath);
 });
 
+var connectionString = Environment.GetEnvironmentVariable("FACILITY_COORDINATOR_DB_CONNECTION")
+                       ?? builder.Configuration.GetConnectionString("FacilityCoordinatorDb");
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+
 var app = builder.Build();
+
+app.MapGet("/facilities", async (AppDbContext db) => await db.Facilities.ToListAsync());
 
 if (app.Environment.IsDevelopment())
 {
