@@ -2,6 +2,7 @@ using FacilitiesCoordinator.API.Endpoints;
 using System.Reflection;
 using FacilitiesCoordinator.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,12 +26,56 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 var app = builder.Build();
 
+//check the database connection at startup and exit if it fails
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+    try
+    {
+        if (!await db.Database.CanConnectAsync())
+        {
+            app.Logger.LogCritical("Database connection failed");
+            Environment.Exit(1);
+        }
+
+        app.Logger.LogInformation("Database connection OK");
+    }
+    catch (Exception ex)
+    {
+        app.Logger.LogCritical(ex, "Database connection failed");
+        Environment.Exit(1);
+    }
+}
+
+//add logging middleware to log incoming requests and outgoing responses
+app.Use(async (context, next) =>
+{
+    var logger = context.RequestServices
+        .GetRequiredService<ILoggerFactory>()
+        .CreateLogger("HTTP");
+
+    var start = Stopwatch.StartNew();
+
+    logger.LogInformation("Incoming {Method} {Path}",
+        context.Request.Method,
+        context.Request.Path);
+
+    await next();
+
+    start.Stop();
+
+    logger.LogInformation("Outgoing {StatusCode} in {Elapsed}ms",
+        context.Response.StatusCode,
+        start.ElapsedMilliseconds);
+});
+
 app.MapGet("/facilities", async (AppDbContext db) => await db.Facilities.ToListAsync());
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();        // Serves the Swagger JSON
-    app.UseSwaggerUI();      // Serves the Swagger UI
+    app.UseSwagger();        
+    app.UseSwaggerUI();      
 }
 
 // Map endpoints
