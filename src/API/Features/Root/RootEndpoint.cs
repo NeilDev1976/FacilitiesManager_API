@@ -1,4 +1,4 @@
-namespace FacilitiesCoordinator.API.Endpoints;
+namespace FacilitiesCoordinator.Features.Root;
 
 
 public static class RootEndpoint

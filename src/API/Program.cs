@@ -1,4 +1,6 @@
-using FacilitiesCoordinator.API.Endpoints;
+using FacilitiesCoordinator.Features.HealthCheck;
+using FacilitiesCoordinator.Features.Root;
+using FacilitiesCoordinator.API.Features.Facilities.Create;
 using System.Reflection;
 using FacilitiesCoordinator.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<CreateFacilityHandler>();
 
 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
@@ -81,5 +84,6 @@ if (app.Environment.IsDevelopment())
 // Map endpoints
 app.MapHealthCheck();
 app.MapRootEndpoint();
+app.MapCreateFacilityEndpoint();
 
 app.Run();
