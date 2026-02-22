@@ -16,6 +16,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<CreateFacilityHandler>();
 builder.Services.AddScoped<ReadFacilitiesHandler>();
 builder.Services.AddValidatorsFromAssemblyContaining<CreateFacilityRequestValidator>();
+builder.Services.AddScoped<ReadSingleFacilityHandler>();
+builder.Services.AddValidatorsFromAssemblyContaining<ReadSingleFacilityRequestValidator>();
 
 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
@@ -89,5 +91,6 @@ app.MapHealthCheck();
 app.MapRootEndpoint();
 app.MapCreateFacilityEndpoint();
 app.MapReadFacilitiesEndpoint();
+app.MapReadSingleFacilityEndpoint();
 
 app.Run();

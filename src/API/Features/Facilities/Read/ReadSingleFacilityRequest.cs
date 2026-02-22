@@ -1,3 +1,3 @@
 namespace FacilitiesCoordinator.API.Features.Facilities.Read;
 
-public sealed record ReadFacilityRequest(string Code);
+public sealed record ReadSingleFacilityRequest(string Code);
