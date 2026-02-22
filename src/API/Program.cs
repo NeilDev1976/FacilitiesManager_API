@@ -1,10 +1,12 @@
 using FacilitiesCoordinator.Features.HealthCheck;
 using FacilitiesCoordinator.Features.Root;
 using FacilitiesCoordinator.API.Features.Facilities.Create;
+using FacilitiesCoordinator.API.Features.Facilities.Read;
 using System.Reflection;
 using FacilitiesCoordinator.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<CreateFacilityHandler>();
+builder.Services.AddScoped<ReadFacilitiesHandler>();
+builder.Services.AddValidatorsFromAssemblyContaining<CreateFacilityRequestValidator>();
 
 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
@@ -73,7 +77,6 @@ app.Use(async (context, next) =>
         start.ElapsedMilliseconds);
 });
 
-app.MapGet("/facilities", async (AppDbContext db) => await db.Facilities.ToListAsync());
 
 if (app.Environment.IsDevelopment())
 {
@@ -85,5 +88,6 @@ if (app.Environment.IsDevelopment())
 app.MapHealthCheck();
 app.MapRootEndpoint();
 app.MapCreateFacilityEndpoint();
+app.MapReadFacilitiesEndpoint();
 
 app.Run();

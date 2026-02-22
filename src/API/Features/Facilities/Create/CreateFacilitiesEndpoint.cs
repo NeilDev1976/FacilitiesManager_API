@@ -1,5 +1,6 @@
 namespace FacilitiesCoordinator.API.Features.Facilities.Create;
 
+using FacilitiesCoordinator.API.Common;
 public static class CreateFacilityEndpoint
 {
     public static IEndpointRouteBuilder MapCreateFacilityEndpoint(this IEndpointRouteBuilder app)
@@ -14,9 +15,11 @@ public static class CreateFacilityEndpoint
             })
             .WithName("CreateFacility")
             .WithTags("Facilities")
+            .AddEndpointFilter<ValidationFilter<CreateFacilityRequest>>()
             .Produces<CreateFacilityResponse>(StatusCodes.Status201Created)
             .ProducesValidationProblem();
 
         return app;
     }
 }
+
