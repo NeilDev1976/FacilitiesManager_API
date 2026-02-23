@@ -11,5 +11,7 @@ public class Facility
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
+    public int? GroupId { get; set; }
+
     public ICollection<FacilityStatusHistory> StatusHistory { get; set; } = new List<FacilityStatusHistory>();
 }

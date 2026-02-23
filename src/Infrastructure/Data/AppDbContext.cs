@@ -12,10 +12,9 @@ public class AppDbContext : DbContext
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
     }
 
-
     public DbSet<Facility> Facilities => Set<Facility>();
     public DbSet<User> Users => Set<User>();
     public DbSet<FacilityStatusHistory> FacilityStatusHistories => Set<FacilityStatusHistory>();
     public DbSet<FacilityStatusNote> FacilityStatusNotes => Set<FacilityStatusNote>();
-
+    public DbSet<FacilityGroup> Groups => Set<FacilityGroup>();
 }

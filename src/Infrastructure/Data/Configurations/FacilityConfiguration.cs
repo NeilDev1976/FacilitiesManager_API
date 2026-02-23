@@ -30,6 +30,11 @@ public class FacilityConfiguration : IEntityTypeConfiguration<Facility>
         builder.Property(f => f.CreatedAt)
             .IsRequired();
 
+        builder.HasOne<FacilityGroup>()
+            .WithMany(g => g.OwnedFacilityList)
+            .HasForeignKey(f => f.GroupId)
+            .OnDelete(DeleteBehavior.SetNull);
+
         builder.HasMany(f => f.StatusHistory)
             .WithOne(h => h.Facility)
             .HasForeignKey(h => h.FacilityId)
