@@ -16,5 +16,5 @@ public class AppDbContext : DbContext
     public DbSet<User> Users => Set<User>();
     public DbSet<FacilityStatusHistory> FacilityStatusHistories => Set<FacilityStatusHistory>();
     public DbSet<FacilityStatusNote> FacilityStatusNotes => Set<FacilityStatusNote>();
-    public DbSet<FacilityGroup> Groups => Set<FacilityGroup>();
+    public DbSet<FacilityGroup> FacilityGroups => Set<FacilityGroup>();
 }

@@ -2,6 +2,8 @@ using FacilitiesCoordinator.Features.HealthCheck;
 using FacilitiesCoordinator.Features.Root;
 using FacilitiesCoordinator.API.Features.Facilities.Create;
 using FacilitiesCoordinator.API.Features.Facilities.Read;
+using FacilitiesCoordinator.API.Features.FacilityGroup.Create;
+using FacilitiesCoordinator.API.Features.FacilityGroup.Update;
 using System.Reflection;
 using FacilitiesCoordinator.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +19,8 @@ builder.Services.AddScoped<CreateFacilityHandler>();
 builder.Services.AddScoped<ReadFacilitiesHandler>();
 builder.Services.AddValidatorsFromAssemblyContaining<CreateFacilityRequestValidator>();
 builder.Services.AddScoped<ReadSingleFacilityHandler>();
+builder.Services.AddScoped<CreateFacilityGroupHandler>();
+builder.Services.AddScoped<UpdateFacilityGroupHandler>();
 builder.Services.AddValidatorsFromAssemblyContaining<ReadSingleFacilityRequestValidator>();
 
 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -66,7 +70,7 @@ app.Use(async (context, next) =>
 
     var start = Stopwatch.StartNew();
 
-    logger.LogInformation("Incoming {Method} {Path}",
+    logger.LogDebug("Incoming {Method} {Path}",
         context.Request.Method,
         context.Request.Path);
 
@@ -74,7 +78,7 @@ app.Use(async (context, next) =>
 
     start.Stop();
 
-    logger.LogInformation("Outgoing {StatusCode} in {Elapsed}ms",
+    logger.LogDebug("Outgoing {StatusCode} in {Elapsed}ms",
         context.Response.StatusCode,
         start.ElapsedMilliseconds);
 });
@@ -92,5 +96,7 @@ app.MapRootEndpoint();
 app.MapCreateFacilityEndpoint();
 app.MapReadFacilitiesEndpoint();
 app.MapReadSingleFacilityEndpoint();
+app.MapCreateFacilityGroupEndpoint();
+app.MapUpdateFacilityGroupEndpoint();
 
 app.Run();

@@ -5,5 +5,6 @@ public sealed record CreateFacilityResponse(
     string Code,
     string Name,
     string CurrentStatus,
-    DateTime CreatedAt
+    DateTime CreatedAt,
+    int GroupId
 );

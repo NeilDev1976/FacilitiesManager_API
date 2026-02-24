@@ -14,7 +14,8 @@ public sealed class CreateFacilityHandler
         var facility = new Facility
         {
             Code = request.Code.Trim(),
-            Name = request.Name.Trim()
+            Name = request.Name.Trim(),
+            GroupId = request.GroupId
             // CurrentStatus + CreatedAt set by defaults on entity
         };
 
@@ -26,7 +27,8 @@ public sealed class CreateFacilityHandler
             facility.Code,
             facility.Name,
             facility.CurrentStatus,
-            facility.CreatedAt
+            facility.CreatedAt,
+            request.GroupId
         );
     }
 }
