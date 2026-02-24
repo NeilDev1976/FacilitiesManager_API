@@ -1,6 +1,4 @@
 namespace FacilitiesCoordinator.API.Features.Facilities.Read;
-
-using FacilitiesCoordinator.API.Common;
 public static class ReadFacilitiesEndpoint
 {
     public static IEndpointRouteBuilder MapReadFacilitiesEndpoint(this IEndpointRouteBuilder app)
