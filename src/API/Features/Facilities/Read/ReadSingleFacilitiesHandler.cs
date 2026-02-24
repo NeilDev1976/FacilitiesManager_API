@@ -17,7 +17,8 @@ public sealed class ReadSingleFacilityHandler
             .Select(f => new ReadFacilitiesResponse(
                 f.Code,
                 f.Name,
-                f.CurrentStatus
+                f.CurrentStatus,
+                f.FacilityGroup != null ? f.FacilityGroup.Name : null
             ))
             .SingleOrDefaultAsync(ct);
     }
