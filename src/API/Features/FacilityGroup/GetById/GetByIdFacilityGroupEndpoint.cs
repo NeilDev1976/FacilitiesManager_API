@@ -15,6 +15,7 @@ public static class GetByIdFacilityGroupEndpoint
         .WithName("GetByIdFacilityGroup")
         .WithTags("FacilityGroups")
         .Produces<GetByIdFacilityGroupResponse>(StatusCodes.Status200OK)
+        .Produces(StatusCodes.Status404NotFound)
         .ProducesValidationProblem();
     return app;
     }
