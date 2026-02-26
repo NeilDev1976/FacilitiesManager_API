@@ -15,5 +15,6 @@ public sealed record UpdateUserRoleResult(
 );
 
 public sealed record UpdateUserRoleResponse(
+    int UserId,
     IReadOnlyList<string> Roles
 );

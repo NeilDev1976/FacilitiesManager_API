@@ -63,7 +63,7 @@ public sealed class UpdateUserRoleHandler
 
         return new(
             UpdateUserRoleStatus.Updated,
-            new UpdateUserRoleResponse(roles.Select(r => r.Name).ToList())
+            new UpdateUserRoleResponse(user.Id, roles.Select(r => r.Name).ToList())
         );
     }
 }
