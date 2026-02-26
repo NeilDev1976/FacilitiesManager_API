@@ -12,6 +12,7 @@ using FacilitiesCoordinator.API.Features.Users.Create;
 using FacilitiesCoordinator.API.Features.Users.GetAll;
 using FacilitiesCoordinator.API.Features.Users.GetById;
 using FacilitiesCoordinator.API.Features.Users.Update;
+using FacilitiesCoordinator.API.Features.Users.UpdateRole;
 
 using System.Reflection;
 using FacilitiesCoordinator.Infrastructure.Data;
@@ -36,6 +37,7 @@ builder.Services.AddScoped<CreateUserHandler>();
 builder.Services.AddScoped<GetAllUsersHandler>();
 builder.Services.AddScoped<GetUserByIdHandler>();
 builder.Services.AddScoped<UpdateUserHandler>();
+builder.Services.AddScoped<UpdateUserRoleHandler>();
 builder.Services.AddValidatorsFromAssemblyContaining<ReadSingleFacilityRequestValidator>();
 
 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -121,5 +123,6 @@ app.MapCreateUserEndpoint();
 app.MapGetAllUsersEndpoint();
 app.MapGetUserByIdEndpoint();
 app.MapUpdateUserEndpoint();
+app.MapUpdateUserRoleEndpoint();
 
 app.Run();
