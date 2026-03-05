@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace FacilitiesCoordinatorAPI.Migrations
+namespace FacilitiesManager.Api.Migrations
 {
     /// <inheritdoc />
     public partial class AddStaffTable : Migration

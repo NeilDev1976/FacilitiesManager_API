@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace FacilitiesCoordinatorAPI.Migrations
+namespace FacilitiesManager.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     [Migration("20260303190838_AddStaffTable")]

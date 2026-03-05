@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace FacilitiesCoordinatorAPI.Migrations
+namespace FacilitiesManager.Api.Migrations
 {
     /// <inheritdoc />
     public partial class AddUsersEmailAndRoles : Migration
