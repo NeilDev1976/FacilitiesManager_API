@@ -4,6 +4,7 @@ using FacilitiesCoordinator.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FacilitiesCoordinatorAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260302213510_AddExternalLogins")]
+    partial class AddExternalLogins
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -237,44 +240,6 @@ namespace FacilitiesCoordinatorAPI.Migrations
                         });
                 });
 
-            modelBuilder.Entity("FacilitiesCoordinator.Domain.Entities.Staff", b =>
-                {
-                    b.Property<int>("StaffId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("StaffId"));
-
-                    b.Property<int>("CurrentStaffCount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FacilityId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MinimumStaffRequired")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("NameNormalized")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.HasKey("StaffId");
-
-                    b.HasIndex("FacilityId", "NameNormalized")
-                        .IsUnique();
-
-                    b.ToTable("Staff", (string)null);
-                });
-
             modelBuilder.Entity("FacilitiesCoordinator.Domain.Entities.User", b =>
                 {
                     b.Property<int>("Id")
@@ -397,17 +362,6 @@ namespace FacilitiesCoordinatorAPI.Migrations
                     b.Navigation("StatusHistory");
                 });
 
-            modelBuilder.Entity("FacilitiesCoordinator.Domain.Entities.Staff", b =>
-                {
-                    b.HasOne("FacilitiesCoordinator.Domain.Entities.Facility", "Facility")
-                        .WithMany("Staff")
-                        .HasForeignKey("FacilityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Facility");
-                });
-
             modelBuilder.Entity("FacilitiesCoordinator.Domain.Entities.UserRole", b =>
                 {
                     b.HasOne("FacilitiesCoordinator.Domain.Entities.Role", "Role")
@@ -429,8 +383,6 @@ namespace FacilitiesCoordinatorAPI.Migrations
 
             modelBuilder.Entity("FacilitiesCoordinator.Domain.Entities.Facility", b =>
                 {
-                    b.Navigation("Staff");
-
                     b.Navigation("StatusHistory");
                 });
 

@@ -19,4 +19,6 @@ public class AppDbContext : DbContext
     public DbSet<FacilityGroup> FacilityGroups => Set<FacilityGroup>();
     public DbSet<Role> Roles => Set<Role>();
     public DbSet<UserRole> UserRoles => Set<UserRole>();
+    public DbSet<ExternalLogin> ExternalLogins => Set<ExternalLogin>();
+    public DbSet<Staff> Staff => Set<Staff>();
 }

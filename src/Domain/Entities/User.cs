@@ -19,4 +19,6 @@ public class User
     public DateTime? UpdatedAt { get; set; }
 
     public ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
+
+    public ICollection<ExternalLogin> ExternalLogins { get; set; } = new List<ExternalLogin>();
 }

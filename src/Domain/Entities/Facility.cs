@@ -16,4 +16,6 @@ public class Facility
     public FacilityGroup? FacilityGroup { get; set; }
 
     public ICollection<FacilityStatusHistory> StatusHistory { get; set; } = new List<FacilityStatusHistory>();
+
+    public ICollection<Staff> Staff { get; set; } = new List<Staff>();
 }

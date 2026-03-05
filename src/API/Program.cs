@@ -19,8 +19,38 @@ using FacilitiesCoordinator.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using FluentValidation;
+using FacilitiesCoordinator.API.Common.Auth;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddScoped<IAuthorizationHandler, DatabaseRoleHandler>();
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Admin", policy =>
+        policy.AddRequirements(new DatabaseRoleRequirement("Admin")));
+    options.AddPolicy("Manager", policy =>
+        policy.AddRequirements(new DatabaseRoleRequirement("Manager")));
+    options.AddPolicy("User", policy =>
+        policy.AddRequirements(new DatabaseRoleRequirement("User")));
+});
+
+//  dev auth scheme for Development early stage development and testing without needing to set up JWT tokens or similar.
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services
+        .AddAuthentication(DevAuthHandler.SchemeName)
+        .AddScheme<AuthenticationSchemeOptions, DevAuthHandler>(
+            DevAuthHandler.SchemeName, _ => { });
+}
+else
+{
+    // For production AddAuthentication().AddJwtBearer(...) will go here.
+    builder.Services.AddAuthentication();
+}
+
 
 // Add services
 builder.Services.AddEndpointsApiExplorer();
@@ -55,6 +85,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 var app = builder.Build();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 //check the database connection at startup and exit if it fails
 using (var scope = app.Services.CreateScope())
