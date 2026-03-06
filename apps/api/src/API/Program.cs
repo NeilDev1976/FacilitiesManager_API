@@ -143,19 +143,22 @@ if (app.Environment.IsDevelopment())
 // Map endpoints
 app.MapHealthCheck();
 app.MapRootEndpoint();
-app.MapCreateFacilityEndpoint();
-app.MapReadFacilitiesEndpoint();
-app.MapReadSingleFacilityEndpoint();
-app.MapCreateFacilityGroupEndpoint();
-app.MapUpdateFacilityGroupEndpoint();
-app.MapGetAllFacilityGroupsEndpoint();
-app.MapGetByIdFacilityGroupEndpoint();
-app.MapDeleteFacilityGroupEndpoint();
-app.MapGetAllFacilitiesByGroupEndpoint();
-app.MapCreateUserEndpoint();
-app.MapGetAllUsersEndpoint();
-app.MapGetUserByIdEndpoint();
-app.MapUpdateUserEndpoint();
-app.MapUpdateUserRoleEndpoint();
+
+var api = app.MapGroup("/api");
+
+api.MapCreateFacilityEndpoint();
+api.MapReadFacilitiesEndpoint();
+api.MapReadSingleFacilityEndpoint();
+api.MapCreateFacilityGroupEndpoint();
+api.MapUpdateFacilityGroupEndpoint();
+api.MapGetAllFacilityGroupsEndpoint();
+api.MapGetByIdFacilityGroupEndpoint();
+api.MapDeleteFacilityGroupEndpoint();
+api.MapGetAllFacilitiesByGroupEndpoint();
+api.MapCreateUserEndpoint();
+api.MapGetAllUsersEndpoint();
+api.MapGetUserByIdEndpoint();
+api.MapUpdateUserEndpoint();
+api.MapUpdateUserRoleEndpoint();
 
 app.Run();
