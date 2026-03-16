@@ -11,6 +11,8 @@ public class Facility
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
+    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+
     public int? GroupId { get; set; }
 
     public FacilityGroup? FacilityGroup { get; set; }

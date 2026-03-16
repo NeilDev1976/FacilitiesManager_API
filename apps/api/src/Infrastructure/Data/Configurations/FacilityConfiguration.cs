@@ -30,6 +30,9 @@ public class FacilityConfiguration : IEntityTypeConfiguration<Facility>
         builder.Property(f => f.CreatedAt)
             .IsRequired();
 
+        builder.Property(f => f.UpdatedAt)
+            .IsRequired();
+
         builder.HasOne(f => f.FacilityGroup)
             .WithMany(g => g.OwnedFacilityList)
             .HasForeignKey(f => f.GroupId)
